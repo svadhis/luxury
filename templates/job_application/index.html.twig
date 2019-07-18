@@ -1,0 +1,41 @@
+{% extends 'admin.html.twig' %}
+
+{% block title %}JobApplication index{% endblock %}
+
+{% block body %}
+    <h1>JobApplication index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Candidate</th>
+                <th>Offer</th>
+                <th>DateCreated</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for job_application in job_applications %}
+            <tr>
+                <td>{{ job_application.id }}</td>
+                <td>{{ job_application.candidate.id }} - {{ job_application.candidate.firstname }} {{ job_application.candidate.lastname }}</td>
+                <td>{{ job_application.offer.reference }} - {{ job_application.offer.title }}</td>
+                <td>{{ job_application.dateCreated ? job_application.dateCreated|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ job_application.status ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('job_application_show', {'id': job_application.id}) }}">show</a>
+                    <a href="{{ path('job_application_edit', {'id': job_application.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('job_application_new') }}">Create new</a>
+{% endblock %}
